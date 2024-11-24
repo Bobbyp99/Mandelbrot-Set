@@ -9,19 +9,13 @@
 
 using namespace std;
 
-//Define constants
-const unsigned int MAX_ITER = 64;
-const float BASE_WIDTH = 4.0;
-const float BASE_HEIGHT = 4.0;
-const float BASE_ZOOM = 0.5;
-
 int main()
 {
   VideoMode vm(VideoMode::getDesktopMode().width / 2,  VideoMode::getDesktopMode().height / 2);
 
   RenderWindow window(vm, "Mandelbrot Set", Style::Default);
 
-  complex<double> z(0, 0);
+  //complex<double> z(0, 0);
 
   //Handling Font and Text
   Text text;
