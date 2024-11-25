@@ -40,3 +40,45 @@ void ComplexPlane::zoomIn()
     m_State = State::CALCULATING;
 }
 
+void ComplexPlane::zoomOut()
+{
+    --m_zoomCount;
+    float x = BASE_WIDTH * (pow(BASE_ZOOM, m_ZoomCount));
+    float y = BASE_HEIGHT * m_aspectRatio * (pow(BASE_ZOOM, m_ZoomCount));
+    m_plane_size = {x, y};
+    m_State = State::CALCULATING;
+}
+
+void ComplexPlane::setCenter(Vector2i mousePixel)
+{
+    
+}
+
+void ComplexPlane::setMouseLocation(Vector2i mousePixel)
+{
+    
+}
+
+void ComplexPlane::loadText(Text& text)
+{
+    //create the upperleft hub
+}
+
+size_t ComplexPlane::countIterations(Vector2f coord)
+{
+    
+}
+
+void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
+{
+    
+}
+
+Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
+{
+    
+}
+
+
+
+
