@@ -8,6 +8,9 @@
 #include <iostream>
 #include <thread>
 
+using namespace std;
+using namespace sf;
+
 const unsigned int MAX_ITER = 64;
 const float BASE_WIDTH = 4.0;
 const float BASE_HEIGHT = 4.0;
@@ -43,7 +46,7 @@ class ComplexPlane
         size_t countIterations(Vector2f coord);
         void iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b);
         Vector2f mapPixelsToCoords(Vector2i mousePixels);
-}
+};
 
 //Function needed for multithreading
 void multithreadRender(ComplexPlane* cPlane, int currentPart = 1, int maxParts = 1);
