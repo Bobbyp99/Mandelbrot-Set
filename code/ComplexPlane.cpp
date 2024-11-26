@@ -19,7 +19,7 @@ void ComplexPlane::draw(RenderTarget& target, RenderStates states) const
 
 void ComplexPlane::updateRender(int currentPart, int maxParts, bool changeState)
 {
-    if (m_State == CALCULATING)
+    if (m_State == State::CALCULATING)
     {
         // h loop
         int height = m_pixel_size.y;
@@ -58,7 +58,7 @@ void ComplexPlane::updateRender(int currentPart, int maxParts, bool changeState)
 
         if (changeState)
         {
-            m_State = DISPLAYING;
+            m_State = State::DISPLAYING;
         }
     }
 }
@@ -106,7 +106,7 @@ void ComplexPlane::loadText(Text& text)
 
     //this function should be called after rendering, as the option to remove its state was removed...
     //..so that it can work with being called multiple times through multithreading
-    m_State = DISPLAYING;   
+    m_State = State::DISPLAYING;   
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord)
