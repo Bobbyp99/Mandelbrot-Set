@@ -1,4 +1,4 @@
-// Project by: Ryan Parker, 
+// Project by: Ryan Parker, Robert Parrish
 
 // Include important C++ libraries here
 #include "ComplexPlane.h"
