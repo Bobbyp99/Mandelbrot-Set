@@ -16,7 +16,8 @@ int main()
 	
 	RenderWindow window(vm, "Mandelbrot Set", Style::Default);
 	
-	//complex<double> z(0, 0);
+	// Construct the ComplexPlane
+	ComplexPlane cPlane(VideoMode::getDesktopMode().width / 2, VideoMode::getDesktopMode().height / 2);
 	
 	//Handling Font and Text
 	Text text;
@@ -27,7 +28,7 @@ int main()
 	}
 	text.setFont(font);
 	text.setCharacterSize(20);
-	text.SetColor(Color::Yellow);
+	text.setColor(Color::Yellow);
 	text.setOutlineThickness(1);
 	text.setStyle(sf::Text::Regular);
 	text.setString(" ");
