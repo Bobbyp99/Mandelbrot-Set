@@ -19,7 +19,7 @@ void ComplexPlane::draw(RenderTarget& target, RenderStates states) const
 
 void complexPlane::updateRender()
 {
-    if(m_State == State::CALCULATING)
+    if(m_State == CALCULATING)
     {
         for(int i = 0; i < pixel.Height; ++i)
         {
