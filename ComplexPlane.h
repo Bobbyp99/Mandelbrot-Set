@@ -25,7 +25,11 @@ class ComplexPlane
         void setCenter(Vector2i mousePixel);
         void setMouseLocation(Vector2i mousePixel);
         void loadText(Text& text);
-        void updateRender();
+
+        // added parameters so that the plane can be rendered in parts
+        // its state can be prevented from changing to display after running,...
+        // ..so the function can be called multiple times (multithreading in mind)
+	    void updateRender(int currentPart = 1, int maxParts = 1, bool changeState = true);
 
     private:
         VertexArray m_vArray;
