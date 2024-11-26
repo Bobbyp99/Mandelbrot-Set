@@ -77,9 +77,8 @@ size_t ComplexPlane::countIterations(Vector2f coord)
 {
     complex<float> z(0, 0);
     complex<float> c(coord.x, coord.y);
-    int maxIterations = MAX_ITER;
     size_t iterations = 0;
-    while(abs(z) < 2.0 && iterations < maxIterations)
+    while(abs(z) < 2.0 && iterations < MAX_ITERjhh)
     {
         z = z * z + c;
         ++iterations;
@@ -89,7 +88,7 @@ size_t ComplexPlane::countIterations(Vector2f coord)
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 {
-    
+    if (count == 
 }
 
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
