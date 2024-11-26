@@ -7,7 +7,7 @@ ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight)
     m_plane_center = {0, 0};
     m_plane_size = {BASE_WIDTH, BASE_HEIGHT * m_aspectRatio};
     m_zoomCount = 0;
-    m_state = State::CALCULATING;
+    m_State = State::CALCULATING;
     m_vArray.setPrimitiveType(Points);
     m_vArray.resize(pixelWidth * pixelHeight);
 }
@@ -66,8 +66,8 @@ void ComplexPlane::updateRender(int currentPart, int maxParts, bool changeState)
 void ComplexPlane::zoomIn()
 {
     ++m_zoomCount;
-    float x = BASE_WIDTH * (pow(BASE_ZOOM, m_ZoomCount));
-    float y = BASE_HEIGHT * m_aspectRatio * (pow(BASE_ZOOM, m_ZoomCount));
+    float x = BASE_WIDTH * (pow(BASE_ZOOM, m_zoomCount));
+    float y = BASE_HEIGHT * m_aspectRatio * (pow(BASE_ZOOM, m_zoomCount));
     m_plane_size = {x, y};
     m_State = State::CALCULATING;
 }
@@ -75,8 +75,8 @@ void ComplexPlane::zoomIn()
 void ComplexPlane::zoomOut()
 {
     --m_zoomCount;
-    float x = BASE_WIDTH * (pow(BASE_ZOOM, m_ZoomCount));
-    float y = BASE_HEIGHT * m_aspectRatio * (pow(BASE_ZOOM, m_ZoomCount));
+    float x = BASE_WIDTH * (pow(BASE_ZOOM, m_zoomCount));
+    float y = BASE_HEIGHT * m_aspectRatio * (pow(BASE_ZOOM, m_zoomCount));
     m_plane_size = {x, y};
     m_State = State::CALCULATING;
 }
