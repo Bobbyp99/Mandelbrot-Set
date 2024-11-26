@@ -25,6 +25,9 @@ void complexPlane::updateRender()
         {
             for(int j = 0; i < pixel.Width; ++j)  
             {
+                m_vArray[j + i * pixelWidth].position = { (float)j,(float)i };
+                Vector2f pixelCoord = mapPixelsToCoords(Vector2i(j, i));
+                countIterations(pixelCoord);
                 
             }
         }
@@ -51,12 +54,15 @@ void ComplexPlane::zoomOut()
 
 void ComplexPlane::setCenter(Vector2i mousePixel)
 {
-    
+    Vector2f pixelCoord = mapPixelToCoords(mousePixel);
+    m_plane_center = pixelCoord;
+    m_State = State::CALCULATING;
 }
 
 void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 {
-    
+    Vector2f pixelCoord = mapPixelToCoords(mousePixel);
+    m_mouseLocation = pixelCoord;
 }
 
 void ComplexPlane::loadText(Text& text)
