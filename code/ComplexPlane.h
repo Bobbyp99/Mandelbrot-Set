@@ -45,7 +45,7 @@ class ComplexPlane
         float m_aspectRatio;
         size_t countIterations(Vector2f coord);
         void iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b);
-        Vector2f mapPixelsToCoords(Vector2i mousePixels);
+        Vector2f mapPixelToCoords(Vector2i mousePixels);
 };
 
 //Function needed for multithreading
