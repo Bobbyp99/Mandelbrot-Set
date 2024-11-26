@@ -36,7 +36,7 @@ class ComplexPlane
 
     private:
         VertexArray m_vArray;
-        State m_state;
+        State m_State;
         Vector2f m_mouseLocation;
         Vector2i m_pixel_size;
         Vector2f m_plane_center;
