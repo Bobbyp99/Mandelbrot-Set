@@ -17,23 +17,49 @@ void ComplexPlane::draw(RenderTarget& target, RenderStates states) const
     target.draw(m_vArray);
 }
 
-void complexPlane::updateRender()
+void ComplexPlane::updateRender(int currentPart, int maxParts, bool changeState)
 {
-    if(m_State == CALCULATING)
+    if (m_State == CALCULATING)
     {
-        for(int i = 0; i < pixel.Height; ++i)
+        // h loop
+        int height = m_pixel_size.y;
+
+        int part = height / maxParts;
+
+        int heightUpper = part * currentPart;
+        int heightLower = part * (currentPart - 1);
+
+        if (currentPart == maxParts || heightUpper > height )
         {
-            for(int j = 0; i < pixel.Width; ++j)  
+            heightUpper = height;
+        }
+
+        // w loop
+        int width = m_pixel_size.x;
+
+        
+
+        for (int h = heightLower; h < heightUpper; h++)
+        {
+            for (int w = 0; w < width; w++)
             {
-                m_vArray[j + i * pixelWidth].position = { (float)j,(float)i };
-                Vector2f pixelCoord = mapPixelsToCoords(Vector2i(j, i));
-                countIterations(pixelCoord);
-                Uint8 r, g, b;
-                iterationsToRGB(r, g, b);
-                m_vArray[j + i * pixelWidth].color = { r,g,b };
+                
+                m_vArray[h * width + w].position = { (float)w, (float)h };
+
+                sf::Vector2f location(mapPixelToCoords({ w,h }));
+                int iterations = countIterations(location);
+                sf::Uint8 r, g, b;
+                iterationsToRGB(iterations, r, g, b);
+
+                m_vArray[h * width + w].color = { r, g, b };
+
             }
         }
-        m_State = State::DISPLAYING;
+
+        if (changeState)
+        {
+            m_State = DISPLAYING;
+        }
     }
 }
 
@@ -70,7 +96,17 @@ void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 
 void ComplexPlane::loadText(Text& text)
 {
-    stringstring ss;
+    std::ostringstream strm;
+    strm << "Mandelbrot Set\n"
+    << "Center: (" << m_plane_center.x << ',' << m_plane_center.y << ")\n"
+    << "Cursor: (" << m_mouseLocation.x << ',' <<  m_mouseLocation.y << ")\n"
+    << "Left-click to Zoom in\n"
+    << "Right-click to Zoom out\n";
+    text.setString(strm.str());
+
+    //this function should be called after rendering, as the option to remove its state was removed...
+    //..so that it can work with being called multiple times through multithreading
+    m_State = DISPLAYING;   
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord)
@@ -78,7 +114,7 @@ size_t ComplexPlane::countIterations(Vector2f coord)
     complex<float> z(0, 0);
     complex<float> c(coord.x, coord.y);
     size_t iterations = 0;
-    while(abs(z) < 2.0 && iterations < MAX_ITERjhh)
+    while(abs(z) < 2.0 && iterations < MAX_ITER)
     {
         z = z * z + c;
         ++iterations;
@@ -88,13 +124,24 @@ size_t ComplexPlane::countIterations(Vector2f coord)
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 {
-    if (count == MAX_ITERS)
+    if (count < 64)
     {
-        r = 0;
-        g = 0;
-        b = 0;
+        // needed the value pi for the following equation
+        const double pi = 2 * acos(0.0);
+    
+        //set color on a gradient which plugs the number of iterations into a..
+        //..parametric equation representing a 3D helix. Each dimension relates to..
+        //..the red, green, and blue colors.
+    
+        r = static_cast<int>(127 * cos((2 * pi * count) / MAX_ITER - 1)); 
+        g = static_cast<int>(127 * sin((2 * pi * count) / MAX_ITER - 1));
+        b = static_cast<int>(255 - (255 * (count / (MAX_ITER - 1))));
     }
-    //else if
+    else
+    {
+        //set color to black
+        r = g = b = 0;
+    }
 }
 
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
@@ -104,6 +151,10 @@ Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
     return Vector2f{real, imaginary);
 }
 
-
-
-
+//Function needed for multithreading to work
+void multithreadRender(ComplexPlane* cPlane, int currentPart, int maxParts)
+{
+    // passing false as to not change m_State to display,..
+    // ..since multiple threads will be calling this funciton
+    cPlane->updateRender(currentPart, maxParts, false);
+}
