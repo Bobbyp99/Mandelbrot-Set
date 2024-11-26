@@ -70,12 +70,21 @@ void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 
 void ComplexPlane::loadText(Text& text)
 {
-    //create the upperleft hub
+    stringstring ss;
 }
 
 size_t ComplexPlane::countIterations(Vector2f coord)
 {
-    
+    complex<float> z(0, 0);
+    complex<float> c(coord.x, coord.y);
+    int maxIterations = MAX_ITER;
+    size_t iterations = 0;
+    while(abs(z) < 2.0 && iterations < maxIterations)
+    {
+        z = z * z + c;
+        ++iterations;
+    }
+    return iterations;    
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
