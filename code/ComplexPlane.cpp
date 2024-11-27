@@ -135,8 +135,8 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
         //..parametric equation representing a 3D helix. Each dimension relates to..
         //..the red, green, and blue colors.
     
-        r = static_cast<int>(127 * cos((2 * pi * count) / MAX_ITER - 1)); 
-        g = static_cast<int>(127 * sin((2 * pi * count) / MAX_ITER - 1));
+        r = static_cast<int>(127 * cos((2 * pi * count) / MAX_ITER - 1) + 127); 
+        g = static_cast<int>(127 * sin((2 * pi * count) / MAX_ITER - 1) + 127);
         b = static_cast<int>(255 - (255 * (count / (MAX_ITER - 1))));
     }
     else
